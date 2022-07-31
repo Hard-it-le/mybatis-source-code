@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.apache.ibatis.type;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,9 +24,9 @@ import static org.mockito.Mockito.when;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class DateTypeHandlerTest extends BaseTypeHandlerTest {
+public class DateTypeHandlerTest extends BaseTypeHandlerTest {
 
   private static final TypeHandler<Date> TYPE_HANDLER = new DateTypeHandler();
   private static final Date DATE = new Date();
@@ -36,7 +36,7 @@ class DateTypeHandlerTest extends BaseTypeHandlerTest {
   @Test
   public void shouldSetParameter() throws Exception {
     TYPE_HANDLER.setParameter(ps, 1, DATE, null);
-    verify(ps).setTimestamp(1, new java.sql.Timestamp(DATE.getTime()));
+    verify(ps).setTimestamp(1, new Timestamp(DATE.getTime()));
   }
 
   @Override

@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,26 +15,24 @@
  */
 package org.apache.ibatis.submitted.primitive_result_type;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.apache.ibatis.BaseDataTest;
+import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.ibatis.BaseDataTest;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+public class PrimitiveResultTypeTest {
 
-class PrimitiveResultTypeTest {
-
-  @BeforeAll
-  static void setup() throws Exception {
+  @BeforeClass
+  public static void setup() throws Exception {
     BaseDataTest.runScript(IbatisConfig.getSqlSessionFactory().getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/primitive_result_type/create.sql");
+            "org/apache/ibatis/submitted/primitive_result_type/create.sql");
   }
 
   @Test
-  void shouldReturnProperPrimitiveType() {
+  public void shouldReturnProperPrimitiveType() {
     List<Integer> codes = ProductDAO.selectProductCodes();
     for (Object code : codes) {
       assertTrue(code instanceof Integer);
@@ -48,10 +46,9 @@ class PrimitiveResultTypeTest {
       assertTrue(bcode instanceof BigDecimal);
     }
   }
-
   @Test
-  void noErrorThrowOut() {
-    List<Product> products = ProductDAO.selectAllProducts();
-    assertEquals(4, products.size(), "should return 4 results");
+  public void noErrorThrowOut(){
+      List<Product> products=ProductDAO.selectAllProducts();
+      assertTrue("should return 4 results", 4==products.size());
   }
 }

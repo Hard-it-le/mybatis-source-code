@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,16 @@
  */
 package org.apache.ibatis.cache;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.apache.ibatis.cache.decorators.SerializedCache;
 import org.apache.ibatis.cache.decorators.SynchronizedCache;
 import org.apache.ibatis.cache.impl.PerpetualCache;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-class PerpetualCacheTest {
+public class PerpetualCacheTest {
 
   @Test
-  void shouldDemonstrateHowAllObjectsAreKept() {
+  public void shouldDemonstrateHowAllObjectsAreKept() {
     Cache cache = new PerpetualCache("default");
     cache = new SynchronizedCache(cache);
     for (int i = 0; i < 100000; i++) {
@@ -36,7 +35,7 @@ class PerpetualCacheTest {
   }
 
   @Test
-  void shouldDemonstrateCopiesAreEqual() {
+  public void shouldDemonstrateCopiesAreEqual() {
     Cache cache = new PerpetualCache("default");
     cache = new SerializedCache(cache);
     for (int i = 0; i < 1000; i++) {
@@ -46,7 +45,7 @@ class PerpetualCacheTest {
   }
 
   @Test
-  void shouldRemoveItemOnDemand() {
+  public void shouldRemoveItemOnDemand() {
     Cache cache = new PerpetualCache("default");
     cache = new SynchronizedCache(cache);
     cache.putObject(0, 0);
@@ -56,7 +55,7 @@ class PerpetualCacheTest {
   }
 
   @Test
-  void shouldFlushAllItemsOnDemand() {
+  public void shouldFlushAllItemsOnDemand() {
     Cache cache = new PerpetualCache("default");
     cache = new SynchronizedCache(cache);
     for (int i = 0; i < 5; i++) {
@@ -69,10 +68,4 @@ class PerpetualCacheTest {
     assertNull(cache.getObject(4));
   }
 
-  @Test
-  void shouldDemonstrateIdIsNull() {
-    Cache cache = new PerpetualCache(null);
-    assertThrows(CacheException.class, () -> cache.hashCode());
-    assertThrows(CacheException.class, () -> cache.equals(new Object()));
-  }
 }

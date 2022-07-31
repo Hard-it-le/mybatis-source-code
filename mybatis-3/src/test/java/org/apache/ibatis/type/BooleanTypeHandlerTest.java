@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2022 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  */
 package org.apache.ibatis.type;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class BooleanTypeHandlerTest extends BaseTypeHandlerTest {
+public class BooleanTypeHandlerTest extends BaseTypeHandlerTest {
 
   private static final TypeHandler<Boolean> TYPE_HANDLER = new BooleanTypeHandler();
 
@@ -36,8 +36,10 @@ class BooleanTypeHandlerTest extends BaseTypeHandlerTest {
   @Override
   @Test
   public void shouldGetResultFromResultSetByName() throws Exception {
-    when(rs.getBoolean("column")).thenReturn(true, false);
+    when(rs.getBoolean("column")).thenReturn(true);
     assertEquals(true, TYPE_HANDLER.getResult(rs, "column"));
+
+    when(rs.getBoolean("column")).thenReturn(false);
     assertEquals(false, TYPE_HANDLER.getResult(rs, "column"));
   }
 
@@ -52,8 +54,10 @@ class BooleanTypeHandlerTest extends BaseTypeHandlerTest {
   @Override
   @Test
   public void shouldGetResultFromResultSetByPosition() throws Exception {
-    when(rs.getBoolean(1)).thenReturn(true, false);
+    when(rs.getBoolean(1)).thenReturn(true);
     assertEquals(true, TYPE_HANDLER.getResult(rs, 1));
+
+    when(rs.getBoolean(1)).thenReturn(false);
     assertEquals(false, TYPE_HANDLER.getResult(rs, 1));
   }
 
@@ -68,13 +72,14 @@ class BooleanTypeHandlerTest extends BaseTypeHandlerTest {
   @Override
   @Test
   public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getBoolean(1)).thenReturn(true, false);
+    when(cs.getBoolean(1)).thenReturn(true);
     assertEquals(true, TYPE_HANDLER.getResult(cs, 1));
+
+    when(cs.getBoolean(1)).thenReturn(false);
     assertEquals(false, TYPE_HANDLER.getResult(cs, 1));
   }
 
   @Override
-  @Test
   public void shouldGetResultNullFromCallableStatement() throws Exception {
     when(cs.getBoolean(1)).thenReturn(false);
     when(cs.wasNull()).thenReturn(true);

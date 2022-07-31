@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -30,17 +30,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class ReverseIncludeTest {
+public class ReverseIncludeTest {
 
   @Test
-  void testReverseIncludeXmlConfig() throws Exception {
+  public void testReverseIncludeXmlConfig() throws Exception {
     testReverseIncludes(getSqlSessionFactoryXmlConfig());
   }
 
   @Test
-  void testReverseIncludeJavaConfig() throws Exception {
+  public void testReverseIncludeJavaConfig() throws Exception {
     testReverseIncludes(getSqlSessionFactoryJavaConfig());
   }
 
@@ -48,7 +48,7 @@ class ReverseIncludeTest {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       ReverseIncludePersonMapper personMapper = sqlSession.getMapper(ReverseIncludePersonMapper.class);
       Person person = personMapper.select(1);
-      assertEquals((Integer) 1, person.getId());
+      assertEquals((Integer)1, person.getId());
       assertEquals("John", person.getName());
     }
   }
@@ -66,8 +66,8 @@ class ReverseIncludeTest {
 
   private SqlSessionFactory getSqlSessionFactoryJavaConfig() throws Exception {
     Configuration configuration = new Configuration();
-    Environment environment = new Environment("development", new JdbcTransactionFactory(),
-        new UnpooledDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
+    Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
     configuration.setEnvironment(environment);
     configuration.addMapper(ReverseIncludePersonMapper.class);
 
@@ -80,7 +80,7 @@ class ReverseIncludeTest {
 
   private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+            "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
   }
 
 }

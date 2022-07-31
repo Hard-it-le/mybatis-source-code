@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,57 +24,56 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-class SimpleListParameterTest {
+public class SimpleListParameterTest {
 
   private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeAll
-  static void setUp() throws Exception {
+  @BeforeClass
+  public static void setUp() throws Exception {
     // create a SqlSessionFactory
-    try (Reader reader = Resources
-        .getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/mybatis-config.xml")) {
+    try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/mybatis-config.xml")) {
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
     }
 
     // populate in-memory database
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/simplelistparameter/CreateDB.sql");
+            "org/apache/ibatis/submitted/simplelistparameter/CreateDB.sql");
   }
 
   @Test
-  void shouldGetACar() {
+  public void shouldGetACar() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       CarMapper carMapper = sqlSession.getMapper(CarMapper.class);
       Car car = new Car();
-      car.setDoors(Arrays.asList("2", "4"));
+      car.setDoors(Arrays.asList(new String[] {"2", "4"}));
       List<Car> cars = carMapper.getCar(car);
-      Assertions.assertNotNull(cars);
+      Assert.assertNotNull(cars);
     }
   }
 
   @Test
-  void shouldResolveGenericFieldGetterType() {
+  public void shouldResolveGenericFieldGetterType() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       CarMapper carMapper = sqlSession.getMapper(CarMapper.class);
       Rv rv = new Rv();
-      rv.doors1 = Arrays.asList("2", "4");
+      rv.doors1 = Arrays.asList(new String[] {"2", "4"});
       List<Rv> rvs = carMapper.getRv1(rv);
-      Assertions.assertNotNull(rvs);
+      Assert.assertNotNull(rvs);
     }
   }
 
   @Test
-  void shouldResolveGenericMethodGetterType() {
+  public void shouldResolveGenericMethodGetterType() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       CarMapper carMapper = sqlSession.getMapper(CarMapper.class);
       Rv rv = new Rv();
-      rv.setDoors2(Arrays.asList("2", "4"));
+      rv.setDoors2(Arrays.asList(new String[] {"2", "4"}));
       List<Rv> rvs = carMapper.getRv2(rv);
-      Assertions.assertNotNull(rvs);
+      Assert.assertNotNull(rvs);
     }
   }
 }

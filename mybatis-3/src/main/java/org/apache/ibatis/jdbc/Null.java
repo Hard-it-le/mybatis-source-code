@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -69,10 +69,10 @@ public enum Null {
   SQLDATE(new SqlDateTypeHandler(), JdbcType.DATE),
   SQLTIME(new SqlTimeTypeHandler(), JdbcType.TIME);
 
-  private final TypeHandler<?> typeHandler;
-  private final JdbcType jdbcType;
+  private TypeHandler<?> typeHandler;
+  private JdbcType jdbcType;
 
-  Null(TypeHandler<?> typeHandler, JdbcType jdbcType) {
+  private Null(TypeHandler<?> typeHandler, JdbcType jdbcType) {
     this.typeHandler = typeHandler;
     this.jdbcType = jdbcType;
   }

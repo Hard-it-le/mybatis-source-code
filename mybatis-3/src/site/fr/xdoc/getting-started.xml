@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2019 the original author or authors.
+       Copyright 2009-2016 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@
 
   <properties>
     <title>MyBatis 3 | Premiers pas</title>
-    <author email="clinton.begin@gmail.com">Clinton Begin</author>
-    <author email="dridi.boukelmoune@zenika.com">Dridi Boukelmoune</author>
+    <author email="clinton.begin@gmail.com.spring.mvc.controller.DemoController">Clinton Begin</author>
+    <author email="dridi.boukelmoune@zenika.com.spring.mvc.controller.DemoController">Dridi Boukelmoune</author>
   </properties>
 
   <body>
@@ -120,8 +120,11 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
         directement exécuter une requête d'un mapper à partir d'une SqlSession.
         Par exemple :
       </p>
-      <source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+      <source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   Blog blog = session.selectOne("org.mybatis.example.BlogMapper.selectBlog", 101);
+} finally {
+  session.close();
 }]]></source>
       <p>
         Même si cette approche fonctionne, et qu'elle est bien connue des
@@ -134,9 +137,12 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
       <p>
         Par exemple:
       </p>
-      <source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+      <source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   BlogMapper mapper = session.getMapper(BlogMapper.class);
   Blog blog = mapper.selectBlog(101);
+} finally {
+  session.close();
 }]]></source>
       <p>
         Explorons maintenant ce qui est exécuté ici.
@@ -226,14 +232,14 @@ Blog blog = mapper.selectBlog(101);]]></source>
       </p>
       <ul>
         <li>
-          Les noms canoniques (e.g. “com.mypackage.MyMapper.selectAllThings”)
+          Les noms canoniques (e.g. “com.spring.mvc.controller.DemoController.mypackage.MyMapper.selectAllThings”)
           sont recherchés tels quels et utilisés lorsqu'ils existent.
         </li>
         <li>
           Les noms courts (e.g. “selectAllThings”) peuvent être utilisés pour
           référencer les symboles en l'absence d'ambiguïté. Cependant, s'il en
-          existe au moins deux (e.g. “com.foo.selectAllThings et
-          com.bar.selectAllThings”), une exception sera levée expliquant que le
+          existe au moins deux (e.g. “com.spring.mvc.controller.DemoController.foo.selectAllThings et
+          com.spring.mvc.controller.DemoController.bar.selectAllThings”), une exception sera levée expliquant que le
           nom est ambigu et doit donc être canonique, complet.
         </li>
       </ul>
@@ -324,8 +330,11 @@ public interface BlogMapper {
           fermer la session dans un bloc finally. Le pattern classique à suivre
           pour assurer la fermeture de la connexion :
         </p>
-        <source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+        <source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   // do work
+} finally {
+  session.close();
 }]]></source>
         <p>
           En utilisant ce pattern de façon systématique, votre code assurera la
@@ -346,9 +355,12 @@ public interface BlogMapper {
           la portée d'un mapper à une méthode. Voici un exemple de mise en
           pratique (la portée du mapper est le bloc try):
         </p>
-        <source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+        <source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   BlogMapper mapper = session.getMapper(BlogMapper.class);
   // do work
+} finally {
+  session.close();
 }
 ]]></source>
 

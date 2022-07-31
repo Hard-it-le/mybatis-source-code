@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.xml_external_ref;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -30,17 +30,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class ResultMapReferenceTest {
+public class ResultMapReferenceTest {
 
   @Test
-  void testCrossReferenceXmlConfig() throws Exception {
+  public void testCrossReferenceXmlConfig() throws Exception {
     testCrossReference(getSqlSessionFactoryXmlConfig());
   }
 
   @Test
-  void testCrossReferenceJavaConfig() throws Exception {
+  public void testCrossReferenceJavaConfig() throws Exception {
     testCrossReference(getSqlSessionFactoryJavaConfig());
   }
 
@@ -66,8 +66,8 @@ class ResultMapReferenceTest {
 
   private SqlSessionFactory getSqlSessionFactoryJavaConfig() throws Exception {
     Configuration configuration = new Configuration();
-    Environment environment = new Environment("development", new JdbcTransactionFactory(),
-        new UnpooledDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
+    Environment environment = new Environment("development", new JdbcTransactionFactory(), new UnpooledDataSource(
+        "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:xmlextref", null));
     configuration.setEnvironment(environment);
     configuration.addMapper(ResultMapReferencePersonMapper.class);
     configuration.addMapper(ResultMapReferencePetMapper.class);
@@ -81,7 +81,7 @@ class ResultMapReferenceTest {
 
   private static void initDb(SqlSessionFactory sqlSessionFactory) throws IOException, SQLException {
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
+            "org/apache/ibatis/submitted/xml_external_ref/CreateDB.sql");
   }
 
 }

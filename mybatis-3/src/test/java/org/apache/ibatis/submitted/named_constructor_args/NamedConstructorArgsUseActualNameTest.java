@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.named_constructor_args;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.io.Reader;
 
@@ -24,18 +24,17 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-class NamedConstructorArgsUseActualNameTest {
+public class NamedConstructorArgsUseActualNameTest {
 
   private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeAll
-  static void setUp() throws Exception {
+  @BeforeClass
+  public static void setUp() throws Exception {
     // create an SqlSessionFactory
-    try (Reader reader = Resources
-        .getResourceAsReader("org/apache/ibatis/submitted/named_constructor_args/mybatis-config.xml")) {
+    try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/named_constructor_args/mybatis-config.xml")) {
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
     }
 
@@ -43,11 +42,11 @@ class NamedConstructorArgsUseActualNameTest {
 
     // populate in-memory database
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/named_constructor_args/CreateDB.sql");
+            "org/apache/ibatis/submitted/named_constructor_args/CreateDB.sql");
   }
 
   @Test
-  void argsByActualNames() {
+  public void argsByActualNames() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       UseActualNameMapper mapper = sqlSession.getMapper(UseActualNameMapper.class);
       User user = mapper.mapConstructorWithoutParamAnnos(1);
@@ -57,7 +56,7 @@ class NamedConstructorArgsUseActualNameTest {
   }
 
   @Test
-  void argsByActualNamesXml() {
+  public void argsByActualNamesXml() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       UseActualNameMapper mapper = sqlSession.getMapper(UseActualNameMapper.class);
       User user = mapper.mapConstructorWithoutParamAnnosXml(1);

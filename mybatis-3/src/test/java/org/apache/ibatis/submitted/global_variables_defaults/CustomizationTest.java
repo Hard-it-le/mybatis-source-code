@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.global_variables_defaults;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Properties;
-
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Property;
@@ -32,12 +28,16 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.type.JdbcType;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class CustomizationTest {
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Properties;
+
+public class CustomizationTest {
 
   @Test
-  void applyDefaultValueWhenCustomizeDefaultValueSeparator() throws IOException {
+  public void applyDefaultValueWhenCustomizeDefaultValueSeparator() throws IOException {
 
     Properties props = new Properties();
     props.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");
@@ -66,7 +66,7 @@ class CustomizationTest {
   }
 
   @Test
-  void applyPropertyValueWhenCustomizeDefaultValueSeparator() throws IOException {
+  public void applyPropertyValueWhenCustomizeDefaultValueSeparator() throws IOException {
 
     Properties props = new Properties();
     props.setProperty(PropertyParser.KEY_ENABLE_DEFAULT_VALUE, "true");

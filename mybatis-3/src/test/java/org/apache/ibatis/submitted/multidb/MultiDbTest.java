@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.multidb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
 
@@ -24,26 +24,26 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-class MultiDbTest {
+public class MultiDbTest {
 
   protected static SqlSessionFactory sqlSessionFactory;
   protected static SqlSessionFactory sqlSessionFactory2;
 
-  @BeforeAll
-  static void setUp() throws Exception {
+  @BeforeClass
+  public static void setUp() throws Exception {
     try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multidb/MultiDbConfig.xml")) {
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
     }
 
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/multidb/CreateDB.sql");
+            "org/apache/ibatis/submitted/multidb/CreateDB.sql");
   }
 
   @Test
-  void shouldExecuteHsqlQuery() {
+  public void shouldExecuteHsqlQuery() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       String answer = mapper.select1(1);
@@ -52,16 +52,16 @@ class MultiDbTest {
   }
 
   @Test
-  void shouldExecuteCommonQuery() {
+  public void shouldExecuteCommonQuery() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       String answer = mapper.select2(1);
       assertEquals("common", answer);
     }
   }
-
+  
   @Test
-  void shouldExecuteHsqlQueryWithDynamicIf() {
+  public void shouldExecuteHsqlQueryWithDynamicIf() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       String answer = mapper.select3(1);
@@ -70,7 +70,7 @@ class MultiDbTest {
   }
 
   @Test
-  void shouldExecuteHsqlQueryWithInclude() {
+  public void shouldExecuteHsqlQueryWithInclude() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       String answer = mapper.select4(1);
@@ -79,23 +79,23 @@ class MultiDbTest {
   }
 
   @Test
-  void shouldInsertInCommonWithSelectKey() {
+  public void shouldInsertInCommonWithSelectKey() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       mapper.insert(new User(2, "test"));
       String answer = mapper.select2(1);
       assertEquals("common", answer);
     }
-  }
-
+  }  
+  
   @Test
-  void shouldInsertInCommonWithSelectKey2() {
+  public void shouldInsertInCommonWithSelectKey2() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       MultiDbMapper mapper = sqlSession.getMapper(MultiDbMapper.class);
       mapper.insert2(new User(2, "test"));
       String answer = mapper.select2(1);
       assertEquals("common", answer);
     }
-  }
+  }  
 
 }

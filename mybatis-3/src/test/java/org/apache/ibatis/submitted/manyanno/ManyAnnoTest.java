@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,6 @@
  */
 package org.apache.ibatis.submitted.manyanno;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.apache.ibatis.BaseDataTest;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -26,14 +22,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class ManyAnnoTest extends BaseDataTest {
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+public class ManyAnnoTest extends BaseDataTest {
 
   @Test
-  void testGetMessageForEmptyDatabase() throws Exception {
-    final Environment environment = new Environment("test", new JdbcTransactionFactory(),
-        BaseDataTest.createBlogDataSource());
+  public void testGetMessageForEmptyDatabase() throws Exception {
+    final Environment environment = new Environment("test", new JdbcTransactionFactory(), BaseDataTest.createBlogDataSource());
     final Configuration config = new Configuration(environment);
     config.addMapper(PostMapper.class);
     final SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(config);
@@ -41,6 +40,7 @@ class ManyAnnoTest extends BaseDataTest {
 
       PostMapper mapper = session.getMapper(PostMapper.class);
       List<AnnoPost> posts = mapper.getPosts(101);
+
 
       assertEquals(3, posts.size());
       assertEquals(3, posts.get(0).getTags().size());

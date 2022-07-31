@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.inline_association_with_dot;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
 
@@ -24,10 +24,10 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Test;
 
-class InlineCollectionWithDotTest {
+public class InlineCollectionWithDotTest {
 
   private SqlSession sqlSession;
 
@@ -39,14 +39,14 @@ class InlineCollectionWithDotTest {
       SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(batisConfigReader);
 
       BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-          "org/apache/ibatis/submitted/inline_association_with_dot/create.sql");
+              "org/apache/ibatis/submitted/inline_association_with_dot/create.sql");
 
       sqlSession = sqlSessionFactory.openSession();
     }
   }
 
-  @AfterEach
-  void closeSession() {
+  @After
+  public void closeSession() {
     if (sqlSession != null) {
       sqlSession.close();
     }
@@ -57,7 +57,8 @@ class InlineCollectionWithDotTest {
    * possible bij using an inline 'association' map.
    */
   @Test
-  void selectElementValueInContainerUsingInline() throws Exception {
+  public void selectElementValueInContainerUsingInline()
+  throws Exception {
     openSession("inline");
 
     Element myElement = sqlSession.getMapper(ElementMapperUsingInline.class).selectElement();
@@ -70,11 +71,11 @@ class InlineCollectionWithDotTest {
    * possible bij using an sub-'association' map.
    */
   @Test
-  void selectElementValueInContainerUsingSubMap() throws Exception {
-    openSession("submap");
+  public void selectElementValueInContainerUsingSubMap() throws Exception {
+   openSession("submap");
 
-    Element myElement = sqlSession.getMapper(ElementMapperUsingSubMap.class).selectElement();
+   Element myElement = sqlSession.getMapper(ElementMapperUsingSubMap.class).selectElement();
 
-    assertEquals("value", myElement.getElement().getElement().getValue());
+   assertEquals("value", myElement.getElement().getElement().getValue());
   }
 }

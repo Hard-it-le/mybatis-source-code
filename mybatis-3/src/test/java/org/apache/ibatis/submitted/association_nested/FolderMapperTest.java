@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,26 +15,26 @@
  */
 package org.apache.ibatis.submitted.association_nested;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
 
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 /**
  * @author Loïc Guerrin <guerrin@fullsix.com>
  */
-class FolderMapperTest {
+public class FolderMapperTest {
 
   @Test
-  void testFindWithChildren() throws Exception {
+  public void testFindWithChildren() throws Exception {
     try (Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:association_nested", "SA", "");
          Statement stmt = conn.createStatement()) {
       stmt.execute("create table folder (id int, name varchar(100), parent_id int)");
@@ -61,7 +61,7 @@ class FolderMapperTest {
 
         List<FolderFlatTree> folders = postMapper.findWithSubFolders("Root");
 
-        Assertions.assertEquals(3, folders.size());
+        Assert.assertEquals(3, folders.size());
       }
     }
   }

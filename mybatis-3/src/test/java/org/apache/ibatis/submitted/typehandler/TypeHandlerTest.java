@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.submitted.typehandler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.io.Reader;
 
@@ -29,16 +29,15 @@ import org.apache.ibatis.submitted.typehandler.Product.ConstantProductIdTypeHand
 import org.apache.ibatis.submitted.typehandler.Product.ProductId;
 import org.apache.ibatis.submitted.typehandler.Product.ProductIdTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-class TypeHandlerTest {
+public class TypeHandlerTest {
 
   private SqlSessionFactory sqlSessionFactory;
 
-  @BeforeEach
-  void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     // create a SqlSessionFactory
     try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/typehandler/mybatis-config.xml")) {
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
@@ -47,7 +46,7 @@ class TypeHandlerTest {
 
     // populate in-memory database
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/typehandler/CreateDB.sql");
+            "org/apache/ibatis/submitted/typehandler/CreateDB.sql");
   }
 
   // Some tests need to register additional type handler
@@ -57,7 +56,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldGetAUser() {
+  public void shouldGetAUser() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -69,7 +68,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldApplyTypeHandlerOnGeneratedKey() {
+  public void shouldApplyTypeHandlerOnGeneratedKey() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -82,7 +81,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldApplyTypeHandlerWithJdbcTypeSpecified() {
+  public void shouldApplyTypeHandlerWithJdbcTypeSpecified() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -92,7 +91,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldApplyTypeHandlerUsingConstructor() {
+  public void shouldApplyTypeHandlerUsingConstructor() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -102,7 +101,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldApplyTypeHandlerOnReturnTypeWithJdbcTypeSpecified() {
+  public void shouldApplyTypeHandlerOnReturnTypeWithJdbcTypeSpecified() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -112,7 +111,7 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldPickSoleTypeHandlerOnXmlResultMap() {
+  public void shouldPickSoleTypeHandlerOnXmlResultMap() {
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -122,9 +121,8 @@ class TypeHandlerTest {
   }
 
   @Test
-  void shouldPickSameTypeHandlerMappedToDifferentJdbcTypes() {
-    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, JdbcType.BIGINT,
-        ProductIdTypeHandler.class);
+  public void shouldPickSameTypeHandlerMappedToDifferentJdbcTypes() {
+    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, JdbcType.BIGINT, ProductIdTypeHandler.class);
     addMapper();
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       Mapper mapper = sqlSession.getMapper(Mapper.class);
@@ -133,19 +131,17 @@ class TypeHandlerTest {
     }
   }
 
-  @Test
-  void shouldFailIfMultipleHandlerMappedToAType() {
-    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, JdbcType.BIGINT,
-        ConstantProductIdTypeHandler.class);
+  @Test(expected = BuilderException.class)
+  public void shouldFailIfMultipleHandlerMappedToAType() {
+    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, JdbcType.BIGINT, ConstantProductIdTypeHandler.class);
     // multiple type handlers are mapped to ProductId and
     // none of them are mapped to null jdbcType.
-    Assertions.assertThrows(BuilderException.class, this::addMapper);
+    addMapper();
   }
 
   @Test
-  void shouldPickHandlerForNull() {
-    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, null,
-        ConstantProductIdTypeHandler.class);
+  public void shouldPickHandlerForNull() {
+    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(ProductId.class, null, ConstantProductIdTypeHandler.class);
     // multiple type handlers are mapped to ProductId and
     // one of them are mapped to null jdbcType.
     addMapper();

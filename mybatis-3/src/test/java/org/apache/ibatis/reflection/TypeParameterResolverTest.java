@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.apache.ibatis.reflection;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
@@ -26,9 +26,6 @@ import java.lang.reflect.WildcardType;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.ibatis.reflection.typeparam.Calculator;
 import org.apache.ibatis.reflection.typeparam.Calculator.SubCalculator;
@@ -36,11 +33,11 @@ import org.apache.ibatis.reflection.typeparam.Level0Mapper;
 import org.apache.ibatis.reflection.typeparam.Level0Mapper.Level0InnerMapper;
 import org.apache.ibatis.reflection.typeparam.Level1Mapper;
 import org.apache.ibatis.reflection.typeparam.Level2Mapper;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class TypeParameterResolverTest {
+public class TypeParameterResolverTest {
   @Test
-  void testReturn_Lv0SimpleClass() throws Exception {
+  public void testReturn_Lv0SimpleClass() throws Exception {
     Class<?> clazz = Level0Mapper.class;
     Method method = clazz.getMethod("simpleSelect");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -48,7 +45,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleVoid() throws Exception {
+  public void testReturn_SimpleVoid() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectVoid", Integer.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -56,7 +53,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimplePrimitive() throws Exception {
+  public void testReturn_SimplePrimitive() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectPrimitive", int.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -64,7 +61,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleClass() throws Exception {
+  public void testReturn_SimpleClass() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelect");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -72,7 +69,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleList() throws Exception {
+  public void testReturn_SimpleList() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectList");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -84,7 +81,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleMap() throws Exception {
+  public void testReturn_SimpleMap() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectMap");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -97,7 +94,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleWildcard() throws Exception {
+  public void testReturn_SimpleWildcard() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectWildcard");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -111,7 +108,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleArray() throws Exception {
+  public void testReturn_SimpleArray() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectArray");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -122,7 +119,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleArrayOfArray() throws Exception {
+  public void testReturn_SimpleArrayOfArray() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectArrayOfArray");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -134,7 +131,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_SimpleTypeVar() throws Exception {
+  public void testReturn_SimpleTypeVar() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectTypeVar");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -146,7 +143,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv1Class() throws Exception {
+  public void testReturn_Lv1Class() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("select", Object.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -154,7 +151,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2CustomClass() throws Exception {
+  public void testReturn_Lv2CustomClass() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectCalculator", Calculator.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -166,7 +163,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2CustomClassList() throws Exception {
+  public void testReturn_Lv2CustomClassList() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectCalculatorList");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -180,7 +177,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv0InnerClass() throws Exception {
+  public void testReturn_Lv0InnerClass() throws Exception {
     Class<?> clazz = Level0InnerMapper.class;
     Method method = clazz.getMethod("select", Object.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -188,7 +185,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2Class() throws Exception {
+  public void testReturn_Lv2Class() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("select", Object.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -196,7 +193,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv1List() throws Exception {
+  public void testReturn_Lv1List() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("selectList", Object.class, Object.class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -208,7 +205,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv1Array() throws Exception {
+  public void testReturn_Lv1Array() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("selectArray", List[].class);
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -219,7 +216,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2ArrayOfArray() throws Exception {
+  public void testReturn_Lv2ArrayOfArray() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectArrayOfArray");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -232,7 +229,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2ArrayOfList() throws Exception {
+  public void testReturn_Lv2ArrayOfList() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectArrayOfList");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -245,7 +242,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Lv2WildcardList() throws Exception {
+  public void testReturn_Lv2WildcardList() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectWildcardList");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -261,7 +258,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_LV2Map() throws Exception {
+  public void testReturn_LV2Map() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectMap");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -274,7 +271,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Subclass() throws Exception {
+  public void testReturn_Subclass() throws Exception {
     Class<?> clazz = SubCalculator.class;
     Method method = clazz.getMethod("getId");
     Type result = TypeParameterResolver.resolveReturnType(method, clazz);
@@ -282,7 +279,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Primitive() throws Exception {
+  public void testParam_Primitive() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("simpleSelectPrimitive", int.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -291,7 +288,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Simple() throws Exception {
+  public void testParam_Simple() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("simpleSelectVoid", Integer.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -300,7 +297,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Lv1Single() throws Exception {
+  public void testParam_Lv1Single() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("select", Object.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -309,7 +306,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Lv2Single() throws Exception {
+  public void testParam_Lv2Single() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("select", Object.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -318,7 +315,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Lv2Multiple() throws Exception {
+  public void testParam_Lv2Multiple() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectList", Object.class, Object.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -328,7 +325,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Lv2CustomClass() throws Exception {
+  public void testParam_Lv2CustomClass() throws Exception {
     Class<?> clazz = Level2Mapper.class;
     Method method = clazz.getMethod("selectCalculator", Calculator.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -341,7 +338,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Lv1Array() throws Exception {
+  public void testParam_Lv1Array() throws Exception {
     Class<?> clazz = Level1Mapper.class;
     Method method = clazz.getMethod("selectArray", List[].class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -354,7 +351,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testParam_Subclass() throws Exception {
+  public void testParam_Subclass() throws Exception {
     Class<?> clazz = SubCalculator.class;
     Method method = clazz.getMethod("setId", Object.class);
     Type[] result = TypeParameterResolver.resolveParamTypes(method, clazz);
@@ -362,7 +359,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturn_Anonymous() throws Exception {
+  public void testReturn_Anonymous() throws Exception {
     Calculator<?> instance = new Calculator<Integer>();
     Class<?> clazz = instance.getClass();
     Method method = clazz.getMethod("getId");
@@ -371,7 +368,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testField_GenericField() throws Exception {
+  public void testField_GenericField() throws Exception {
     Class<?> clazz = SubCalculator.class;
     Class<?> declaredClass = Calculator.class;
     Field field = declaredClass.getDeclaredField("fld");
@@ -380,26 +377,21 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testReturnParam_WildcardWithUpperBounds() throws Exception {
-    class Key {
-    }
+  public void testReturnParam_WildcardWithUpperBounds() throws Exception {
+    class Key {}
     @SuppressWarnings("unused")
     class KeyBean<S extends Key & Cloneable, T extends Key> {
       private S key1;
       private T key2;
-
       public S getKey1() {
         return key1;
       }
-
       public void setKey1(S key1) {
         this.key1 = key1;
       }
-
       public T getKey2() {
         return key2;
       }
-
       public void setKey2(T key2) {
         this.key2 = key2;
       }
@@ -416,7 +408,7 @@ class TypeParameterResolverTest {
   }
 
   @Test
-  void testDeepHierarchy() throws Exception {
+  public void testDeepHierarchy() throws Exception {
     @SuppressWarnings("unused")
     abstract class A<S> {
       protected S id;
@@ -432,29 +424,4 @@ class TypeParameterResolverTest {
     Field field = A.class.getDeclaredField("id");
     assertEquals(Integer.class, TypeParameterResolver.resolveFieldType(field, clazz));
   }
-
-  @Test
-  void shouldTypeVariablesBeComparedWithEquals() throws Exception {
-    // #1794
-    ExecutorService executor = Executors.newFixedThreadPool(2);
-    Future<Type> futureA = executor.submit(() -> {
-      Type retType = TypeParameterResolver.resolveReturnType(IfaceA.class.getMethods()[0], IfaceA.class);
-      return ((ParameterizedType) retType).getActualTypeArguments()[0];
-    });
-    Future<Type> futureB = executor.submit(() -> {
-      Type retType = TypeParameterResolver.resolveReturnType(IfaceB.class.getMethods()[0], IfaceB.class);
-      return ((ParameterizedType) retType).getActualTypeArguments()[0];
-    });
-    assertEquals(AA.class, futureA.get());
-    assertEquals(BB.class, futureB.get());
-    executor.shutdown();
-  }
-
-  // @formatter:off
-  class AA {}
-  class BB {}
-  interface IfaceA extends ParentIface<AA> {}
-  interface IfaceB extends ParentIface<BB> {}
-  interface ParentIface<T> {List<T> m();}
-  // @formatter:on
 }

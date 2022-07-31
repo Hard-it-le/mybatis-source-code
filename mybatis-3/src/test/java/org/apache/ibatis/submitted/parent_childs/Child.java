@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,50 +17,32 @@ package org.apache.ibatis.submitted.parent_childs;
 
 public class Child {
 
-  private Integer id;
+  private int id;
   private String name;
   private String surName;
-  private Integer age;
+  private int age;
 
-  public Child() {
-
-  }
-
-  public Child(Integer id, String name, String surName, Integer age) {
-    this.id = id;
-    this.name = name;
-    this.surName = surName;
-    this.age = age;
-  }
-
-  public Integer getId() {
+  public int getId() {
     return id;
   }
-
-  public void setId(Integer id) {
+  public void setId(int id) {
     this.id = id;
   }
-
   public String getName() {
     return name;
   }
-
   public void setName(String name) {
     this.name = name;
   }
-
   public String getSurName() {
     return surName;
   }
-
   public void setSurName(String surName) {
     this.surName = surName;
   }
-
   public int getAge() {
     return age;
   }
-
   public void setAge(int age) {
     this.age = age;
   }

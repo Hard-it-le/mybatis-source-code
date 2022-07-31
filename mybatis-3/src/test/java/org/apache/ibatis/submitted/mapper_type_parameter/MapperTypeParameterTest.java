@@ -1,5 +1,5 @@
-/*
- *    Copyright 2009-2021 the original author or authors.
+/**
+ *    Copyright 2009-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  */
 package org.apache.ibatis.submitted.mapper_type_parameter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.io.Reader;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,27 +27,26 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-class MapperTypeParameterTest {
+public class MapperTypeParameterTest {
   private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeAll
-  static void setUp() throws Exception {
+  @BeforeClass
+  public static void setUp() throws Exception {
     // create an SqlSessionFactory
-    try (Reader reader = Resources
-        .getResourceAsReader("org/apache/ibatis/submitted/mapper_type_parameter/mybatis-config.xml")) {
+    try (Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/mapper_type_parameter/mybatis-config.xml")) {
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
     }
 
     // populate in-memory database
     BaseDataTest.runScript(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource(),
-        "org/apache/ibatis/submitted/mapper_type_parameter/CreateDB.sql");
+            "org/apache/ibatis/submitted/mapper_type_parameter/CreateDB.sql");
   }
 
   @Test
-  void shouldResolveReturnType() {
+  public void shouldResolveReturnType() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
       Person person = mapper.select(new Person(1));
@@ -56,7 +55,7 @@ class MapperTypeParameterTest {
   }
 
   @Test
-  void shouldResolveListTypeParam() {
+  public void shouldResolveListTypeParam() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
       List<Person> persons = mapper.selectList(null);
@@ -67,7 +66,7 @@ class MapperTypeParameterTest {
   }
 
   @Test
-  void shouldResolveMultipleTypeParam() {
+  public void shouldResolveMultipleTypeParam() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
       Map<Long, Country> results = mapper.selectMap(new Country());
@@ -78,7 +77,7 @@ class MapperTypeParameterTest {
   }
 
   @Test
-  void shouldResolveParameterizedReturnType() {
+  public void shouldResolveParameterizedReturnType() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       PersonListMapper mapper = sqlSession.getMapper(PersonListMapper.class);
       List<Person> persons = mapper.select(null);
@@ -89,7 +88,7 @@ class MapperTypeParameterTest {
   }
 
   @Test
-  void shouldResolveParam() {
+  public void shouldResolveParam() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
       assertEquals(1, mapper.update(new Country(2L, "Greenland")));
@@ -97,11 +96,11 @@ class MapperTypeParameterTest {
   }
 
   @Test
-  void shouldResolveListParam() {
+  public void shouldResolveListParam() {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
       PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
       Person person1 = new Person("James");
-      assertEquals(1, mapper.insert(Collections.singletonList(person1)));
+      assertEquals(1, mapper.insert(Arrays.asList(person1)));
       assertNotNull(person1.getId());
     }
   }

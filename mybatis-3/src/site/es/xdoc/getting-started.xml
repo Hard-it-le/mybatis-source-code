@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2009-2019 the original author or authors.
+       Copyright 2009-2016 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -21,18 +21,18 @@
 
 	<properties>
 		<title>MyBatis 3 | Primeros pasos</title>
-		<author email="clinton.begin@gmail.com">Clinton Begin</author>
-		<author email="eduardo.macarron@gmail.com">Eduardo Macarron</author>
+		<author email="clinton.begin@gmail.com.spring.mvc.controller.DemoController">Clinton Begin</author>
+		<author email="eduardo.macarron@gmail.com.spring.mvc.controller.DemoController">Eduardo Macarron</author>
 	</properties>
 
 	<body>
 		<section name="Primeros pasos">
-
-
+		
+    
     <subsection name="Instalación">
       <p>
         Para usar MyBatis sólo tienes que incluir el fichero
-        <a href="https://github.com/mybatis/mybatis-3/releases">mybatis-x.x.x.jar</a>
+        <a href="https://github.com.spring.mvc.controller.DemoController/mybatis/mybatis-3/releases">mybatis-x.x.x.jar</a>
         en el classpath.
       </p>
       <p>
@@ -44,10 +44,10 @@
   <artifactId>mybatis</artifactId>
   <version>x.x.x</version>
 </dependency>]]></source>
-    </subsection>
-
+    </subsection>    
+    
 			<subsection name="Cómo crear un SqlSessionFactory a partir de XML">
-
+		
 			<p>
 				Una aplicación que usa MyBatis debe utilizar una instancia de
 				SqlSessionFactory. Se puede obtener una instancia de
@@ -156,8 +156,11 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 					base de datos. Puedes ejecutar mapped statements con la instancia de
 					SqlSession de la siguiente forma:
 				</p>
-				<source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+				<source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   Blog blog = (Blog) session.selectOne("org.mybatis.example.BlogMapper.selectBlog", 101);
+} finally {
+  session.close();
 }]]></source>
 				<p>
 					Aunque esta forma de trabajar con la SqlSession funciona correctamente y
@@ -171,9 +174,12 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(confi
 				<p>
 					Por ejemplo:
 				</p>
-				<source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+				<source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   BlogMapper mapper = session.getMapper(BlogMapper.class);
   Blog blog = mapper.selectBlog(101);
+} finally {
+  session.close();
 }]]></source>
 				<p>
 					Vemos con detalle cómo funciona esto.
@@ -268,12 +274,12 @@ Blog blog = mapper.selectBlog(101);]]></source>
 				<ul>
 					<li>Primeramente se buscan directamente los nombres completamente
 						cualificados (fully qualified names) (ej.
-						“com.mypackage.MyMapper.selectAllThings”).
+						“com.spring.mvc.controller.DemoController.mypackage.MyMapper.selectAllThings”).
 					</li>
 					<li>Pueden usarse los nombres cortos (ej. “selectAllThings”)
 						siempre que no haya ambigüedad. Sin embargo, si hubiera dos o más
-						elementos (ej. “com.foo.selectAllThings" y
-						"com.bar.selectAllThings”), entonces obtendrás un error indicando
+						elementos (ej. “com.spring.mvc.controller.DemoController.foo.selectAllThings" y
+						"com.spring.mvc.controller.DemoController.bar.selectAllThings”), entonces obtendrás un error indicando
 						que el nombre es ambiguo y que debe ser “fully qualified”.
 					</li>
 				</ul>
@@ -361,8 +367,11 @@ public interface BlogMapper {
 					Deberías asegurarte de que se cierra con un bloque finally. A
 					continuación se muestra el patrón estándar para asegurarse de que
 					las sesiones se cierran correctamente.</p>
-				<source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+				<source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   // do work
+} finally {
+  session.close();
 }]]></source>
 				<p>Usando este patrón en todo el código se asegura que los recursos
 					de base de datos se liberarán correctamente.</p>
@@ -380,9 +389,12 @@ public interface BlogMapper {
 					la situación se te vaya de las manos. Hazlo fácil (keep it simple)
 					y mantén los mappers en el ámbito de método. Este ejemplo muestra
 					esta práctica:</p>
-				<source><![CDATA[try (SqlSession session = sqlSessionFactory.openSession()) {
+				<source><![CDATA[SqlSession session = sqlSessionFactory.openSession();
+try {
   BlogMapper mapper = session.getMapper(BlogMapper.class);
   // do work
+} finally {
+  session.close();
 }
 ]]></source>
 
