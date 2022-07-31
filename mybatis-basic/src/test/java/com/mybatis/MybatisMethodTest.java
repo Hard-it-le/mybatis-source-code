@@ -2,6 +2,7 @@ package com.mybatis;
 
 import com.mybatis.entity.User;
 import com.mybatis.mapper.IUserMapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -100,31 +102,29 @@ public class MybatisMethodTest {
     /**
      * 简单定义mybatis基本流程
      */
-//    public void simpleMybatis() {
-//        UserMapper userMapper = (UserMapper) Proxy.newProxyInstance(App.class.getClassLoader(),
-//                new Class[]{UserMapper.class},
-//                new InvocationHandler() {
-//                    @Override
-//                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//                        //1、通过参数完成注解中替换，优先解析参数，并完成替换。
-//                        Map<String, Object> parseArgsMap = parseArgs(method, args);
-//                        System.out.println(parseArgsMap);
-//                        //获取方法上的注解
-//                        Select select = method.getAnnotation(Select.class);
-//                        if (select != null) {
-//                            //核心逻辑处理
-//                            String[] value = select.value();
-//                            String sql = value[0];
-//                            sql = parseSql(sql, parseArgsMap);
-//                            System.out.println(sql);
-//                        }
-//                        //数据库操作
-//                        //结果集的映射处理
-//                        return null;
-//                    }
-//                });
-//        userMapper.selectByName("张三");
-//    }
+    @Test
+    public void simpleMybatis() {
+        IUserMapper userMapper = (IUserMapper) Proxy.newProxyInstance(MybatisMethodTest.class.getClassLoader(),
+                new Class[]{IUserMapper.class},
+                (proxy, method, args) -> {
+                    //1、通过参数完成注解中替换，优先解析参数，并完成替换。
+                    Map<String, Object> parseArgsMap = parseArgs(method, args);
+                    System.out.println(parseArgsMap);
+                    //获取方法上的注解
+                    Select select = method.getAnnotation(Select.class);
+                    if (select != null) {
+                        //核心逻辑处理
+                        String[] value = select.value();
+                        String sql = value[0];
+                        sql = parseSql(sql, parseArgsMap);
+                        System.out.println(sql);
+                    }
+                    //数据库操作
+                    //结果集的映射处理
+                    return null;
+                });
+        userMapper.selectByUserName("张三");
+    }
 
     /**
      * 方法参数解析
