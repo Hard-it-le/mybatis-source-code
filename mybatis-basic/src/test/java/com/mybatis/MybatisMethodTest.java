@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @Author yujiale
  * @Date 2022/7/31 19:17
- * @Description TODO
+ * @Description
  **/
 public class MybatisMethodTest {
 
@@ -63,7 +63,6 @@ public class MybatisMethodTest {
     /**
      * 传统方式
      *
-     * @throws IOException
      */
     @Test
     public void selectOneTest() {
@@ -129,15 +128,15 @@ public class MybatisMethodTest {
     /**
      * 方法参数解析
      *
-     * @param method
-     * @param args
-     * @return
+     * @param method 方法
+     * @param args 参数
+     * @return 返回值
      */
     public Map<String, Object> parseArgs(Method method, Object[] args) {
         HashMap<String, Object> map = new HashMap<>();
         //获取方法的参数
         Parameter[] parameters = method.getParameters();
-        int index[] = {0};
+        int[] index = {0};
         Arrays.asList(parameters).forEach(parameter -> {
             String name = parameter.getName();
             map.put(name, args[index[0]]);
