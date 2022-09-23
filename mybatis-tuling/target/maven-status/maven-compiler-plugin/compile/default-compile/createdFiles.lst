@@ -1,0 +1,4 @@
+com\tuling\mapper\UserMapper.class
+com\tuling\plugins\ExamplePlugin.class
+com\tuling\entity\User.class
+com\tuling\App.class
