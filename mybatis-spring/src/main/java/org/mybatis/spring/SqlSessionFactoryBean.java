@@ -1,5 +1,5 @@
 /**
- * Copyright ${license.git.copyrightYears} the original author or authors.
+ * Copyright 2010-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -586,8 +586,7 @@ public class SqlSessionFactoryBean
        * 因为我们在创建XMLConfigBuilder的时候已经把我们的Configuration对象创建出来了
        */
       targetConfiguration = xmlConfigBuilder.getConfiguration();
-    }
-    else {
+    } else {
       LOGGER.debug(
           () -> "Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration");
       targetConfiguration = new Configuration();
@@ -734,15 +733,14 @@ public class SqlSessionFactoryBean
         this.dataSource));
 
     /**
-     * 循环我们的mapper.xml文件
-     * factoryBean.setMapperLocations(new
-     *    PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml"));
+     * 循环我们的mapper.xml文件 factoryBean.setMapperLocations(new
+     * PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/*.xml"));
      */
     if (this.mapperLocations != null) {
       if (this.mapperLocations.length == 0) {
         LOGGER.warn(() -> "Property 'mapperLocations' was specified but matching resources are not found.");
       } else {
-        //循环
+        // 循环
         for (Resource mapperLocation : this.mapperLocations) {
           if (mapperLocation == null) {
             continue;

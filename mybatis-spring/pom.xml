@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright ${license.git.copyrightYears} the original author or authors.
+    Copyright 2010-2022 the original author or authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
   </parent>
 
   <artifactId>mybatis-spring</artifactId>
-  <version>2.0.3-xsls</version>
+  <version>2.0.3-my</version>
   <packaging>jar</packaging>
 
   <name>mybatis-spring</name>
@@ -105,7 +105,7 @@
     <osgi.import>org.springframework.batch.*;resolution:=optional,*</osgi.import>
     <osgi.dynamicImport>*</osgi.dynamicImport>
 
-    <mybatis.version>3.5.3-xsls</mybatis.version>
+    <mybatis.version>3.5.3-my</mybatis.version>
     <spring.version>5.0.8.RELEASE</spring.version>
     <spring-batch.version>4.1.2.RELEASE</spring-batch.version>
     <module.name>org.mybatis.spring</module.name>
