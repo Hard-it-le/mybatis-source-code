@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /***
- * @Author 徐庶   QQ:1092002729
- * @Slogan 致敬大师，致敬未来的你
+
  *
  * 双冒号语法
  * 1.静态方法引用（static method）语法：classname::methodname 例如：Person::getAge
