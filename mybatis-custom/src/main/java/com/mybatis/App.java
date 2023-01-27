@@ -12,6 +12,10 @@ import java.io.Reader;
 /***
  */
 public class App {
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         String resource = "mybatis-config.xml";
         //将XML配置文件构建为Configuration配置类
